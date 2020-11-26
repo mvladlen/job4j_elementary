@@ -5,8 +5,7 @@ public class ArgMethod {
         System.out.println("Hello, " + name);
     }
 
-
-        public static void hello(String name, int age) {
+    public static void hello(String name, int age) {
             System.out.print("Hello, " + name + " ");
             System.out.println(age);
         }
