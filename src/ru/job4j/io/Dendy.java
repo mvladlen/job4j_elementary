@@ -13,15 +13,14 @@ public class Dendy {
             System.out.println("3. Выйти");
             System.out.print("Введите пункт меню, чтобы начать игру: ");
             int select = Integer.parseInt(input.nextLine());
-            if (select == 3) {
-                System.out.println("Игра завершена.");
-                run = false;
-            } else if (select == 1) {
-                System.out.println("Танчики загружаются ... ");
-            } else if (select == 2) {
-                System.out.println("Супер Марио загружается ... ");
-            } else {
-                System.out.println("Такой игры нет.");
+            switch (select) {
+                case 3 -> {
+                    System.out.println("Игра завершена.");
+                    run = false;
+                }
+                case 1 -> System.out.println("Танчики загружаются ... ");
+                case 2 -> System.out.println("Супер Марио загружается ... ");
+                default -> System.out.println("Такой игры нет.");
             }
             System.out.println();
         }
