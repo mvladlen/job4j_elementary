@@ -10,7 +10,7 @@ public class BankService {
 
     public void addUser(User user) {
         if (!this.users.containsKey(user)) {
-            users.put(user, new ArrayList<Account>());
+            users.put(user, new ArrayList<>());
         }
     }
 
@@ -49,7 +49,9 @@ public class BankService {
                                  String destPassport, String destRequisite, double amount) {
         Account source = findByRequisite(srcPassport, srcRequisite);
         Account destination = findByRequisite(destPassport, destRequisite);
-        if (source == null || destination == null)
+        if (source == null || destination == null) {
+            return false;
+        }
         if (source.getBalance() < amount) {
             return false;
         }
