@@ -9,9 +9,7 @@ public class BankService {
     private final Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-        if (!this.users.containsKey(user)) {
-            users.put(user, new ArrayList<>());
-        }
+            users.putIfAbsent(user, new ArrayList<>());
     }
 
     public void addAccount(String passport, Account account) {
@@ -49,10 +47,9 @@ public class BankService {
                                  String destPassport, String destRequisite, double amount) {
         Account source = findByRequisite(srcPassport, srcRequisite);
         Account destination = findByRequisite(destPassport, destRequisite);
-        if (source == null || destination == null) {
-            return false;
-        }
-        if (source.getBalance() < amount) {
+        if (source == null
+                || destination == null
+                || source.getBalance() < amount) {
             return false;
         }
         source.setBalance(source.getBalance() - amount);
