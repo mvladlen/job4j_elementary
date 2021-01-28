@@ -21,7 +21,7 @@ public class Departments {
     }
 
     public static void sortAsc(List<String> orgs) {
-        Collections.sort(orgs, new DepComp());
+        Collections.sort(orgs);
     }
 
     public static void sortDesc(List<String> orgs) {
