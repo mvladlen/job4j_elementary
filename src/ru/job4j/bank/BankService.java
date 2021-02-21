@@ -16,16 +16,18 @@ public class BankService {
 
     /**
      * Метод добавляет пользователя без проверки на дубли
+     *
      * @param user объект пользователь
      */
     public void addUser(User user) {
-            users.putIfAbsent(user, new ArrayList<>());
+        users.putIfAbsent(user, new ArrayList<>());
     }
 
     /**
      * Метод добавляет счет в список счетов User, которого находит по
+     *
      * @param passport - паспорт
-     * @param account - счет
+     * @param account  - счет
      */
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
@@ -39,43 +41,46 @@ public class BankService {
 
     /**
      * Метод находит пользователя по паспорту, если таких несколько, то находится только один
+     *
      * @param passport - паспорт
      * @return - пользователь
      */
     public User findByPassport(String passport) {
-        for (User key : users.keySet()) {
-            if (key.getPassport().equals(passport)) {
-                return key;
-            }
-        }
-        return null;
+        return users.keySet()
+                .stream()
+                .filter(p -> p.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
      * Метод ищет счет по реквизитам и паспорту
-     * @param passport - паспорт
+     *
+     * @param passport  - паспорт
      * @param requisite - реквизиты
      * @return - найденный счет
      */
     public Account findByRequisite(String passport, String requisite) {
-        if (findByPassport(passport) != null) {
-            List<Account> accounts = users.get(findByPassport(passport));
-            for (Account account : accounts) {
-                if (account.getRequisite().equals(requisite)) {
-                    return account;
-                }
-            }
+        User p = findByPassport(passport);
+        if (p != null) {
+            return users.get(p)
+                    .stream()
+                    .filter(r -> r.getRequisite().equals(requisite))
+                    .findFirst()
+                    .orElse(null);
         }
         return null;
+
     }
 
     /**
      * Метод позволяет перевести средства между счетами
-     * @param srcPassport - поспорт отправителя
-     * @param srcRequisite реквизиты счета отправителя
-     * @param destPassport - паспорт получателя
+     *
+     * @param srcPassport   - поспорт отправителя
+     * @param srcRequisite  реквизиты счета отправителя
+     * @param destPassport  - паспорт получателя
      * @param destRequisite - реквизиты счета получателя
-     * @param amount - сумма перевода
+     * @param amount        - сумма перевода
      * @return - true если перевод выполнен, false - перевод невозможен
      */
     public boolean transferMoney(String srcPassport, String srcRequisite,
