@@ -29,15 +29,12 @@ public class BankService {
     public void addAccount(String passport, Account account) {
         Optional<User> user = findByPassport(passport);
         if (user.isPresent()) {
-            Optional<List<Account>> accounts = Optional.ofNullable(users.get(user.get()));
-
-            if (accounts.isPresent()) {
-                if (accounts.get().contains(account)) {
-                    return;
-                }
-                accounts.get().add(account);
-                users.put(user.get(), accounts.get());
+            List<Account> accounts = users.get(user.get());
+            if (!accounts.isEmpty() && accounts.contains(account)) {
+                return;
             }
+            accounts.add(account);
+            users.put(user.get(), accounts);
         }
     }
 
@@ -67,7 +64,6 @@ public class BankService {
                 .stream()
                 .filter(r -> r.getRequisite().equals(requisite))
                 .findFirst());
-
     }
 
     /**
