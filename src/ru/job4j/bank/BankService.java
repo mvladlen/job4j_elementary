@@ -34,7 +34,6 @@ public class BankService {
                 return;
             }
             accounts.add(account);
-            users.put(user.get(), accounts);
         }
     }
 
